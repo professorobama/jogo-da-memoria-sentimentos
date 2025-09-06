@@ -1,0 +1,87 @@
+/* Estilos gerais para a página */
+body {
+    font-family: Arial, sans-serif; /* Fonte amigável */
+    display: flex; /* Centraliza o conteúdo */
+    flex-direction: column; /* Coloca os itens um embaixo do outro */
+    justify-content: center; /* Alinha verticalmente */
+    align-items: center; /* Alinha horizontalmente */
+    height: 100vh; /* Ocupa a altura toda da tela */
+    background-color: #f0f8ff; /* Um fundo azul claro, como o céu */
+    margin: 0;
+}
+
+h1 {
+    color: #4a4e69;
+}
+
+/* Estilos para o tabuleiro do jogo */
+.game-board {
+    display: grid; /* Usamos Grid para criar uma grade perfeita */
+    grid-template-columns: repeat(4, 100px); /* 4 colunas de 100px cada */
+    gap: 10px; /* Espaço de 10px entre as cartas */
+    perspective: 1000px; /* Efeito de perspectiva 3D para a animação de virar */
+}
+
+/* Estilo base para cada carta */
+.card {
+    width: 100px;
+    height: 100px;
+    position: relative; /* Necessário para posicionar a frente e o verso */
+    transform-style: preserve-3d; /* Mantém o efeito 3D durante a animação */
+    transition: transform 0.6s; /* A animação de virar a carta durará 0.6s */
+    cursor: pointer; /* O mouse vira uma "mãozinha" ao passar por cima */
+}
+
+/* Quando uma carta tiver a classe "flipped", ela vai virar */
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Estilos para a frente e o verso da carta */
+.card-face {
+    position: absolute; /* Coloca a frente e o verso um sobre o outro */
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Esconde o lado de trás do elemento quando ele não está virado para nós */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Verso da carta (o que vemos no início) */
+.card-back {
+    background-color: #9a8c98;
+    color: white;
+    font-size: 50px; /* Tamanho do ponto de interrogação */
+}
+
+/* Frente da carta (o conteúdo, emoji ou palavra) */
+.card-front {
+    background-color: #f2e9e4;
+    color: #4a4e69;
+    transform: rotateY(180deg); /* Já começa "virada" para o outro lado */
+}
+
+/* Estilo para a mensagem de vitória */
+#victory-message {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#restart-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+}
+
+/* Classe para esconder elementos */
+.hidden {
+    display: none;
+}
