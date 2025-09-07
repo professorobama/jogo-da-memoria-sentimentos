@@ -1,118 +1,199 @@
-/* Estilos gerais para a página */
+/* --- JOGO DA MEMÓRIA DOS SENTIMENTOS - ESTILO DIVERTIDO --- */
+
+/* 1. Importando uma fonte divertida do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap');
+
+/* 2. Variáveis de Cor (para facilitar a customização) */
+:root {
+    --cor-fundo: #87CEEB; /* Azul céu */
+    --cor-texto-principal: #2c3e50; /* Azul escuro */
+    --cor-frente-carta: #FFD700; /* Amarelo ouro */
+    --cor-verso-carta: #9370DB;  /* Roxo médio */
+    --cor-sombra: rgba(0, 0, 0, 0.15);
+    --cor-botao-proximo: #2ecc71; /* Verde esmeralda */
+    --cor-botao-reiniciar: #e74c3c; /* Vermelho alaranjado */
+}
+
+/* 3. Estilos Gerais */
 body {
-    font-family: Arial, sans-serif; /* Fonte amigável */
-    display: flex; /* Centraliza o conteúdo */
-    flex-direction: column; /* Coloca os itens um embaixo do outro */
-    justify-content: center; /* Alinha verticalmente */
-    align-items: center; /* Alinha horizontalmente */
-    height: 100vh; /* Ocupa a altura toda da tela */
-    background-color: #f0f8ff; /* Um fundo azul claro, como o céu */
+    /* Usando a nova fonte arredondada e divertida */
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px 0; /* Espaço para não colar no topo/fundo */
+    background: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    text-align: center;
 }
 
 h1 {
-    color: #4a4e69;
+    font-size: 2.2em;
+    font-weight: 900; /* Extra negrito para o título principal */
+    color: white;
+    text-shadow: 2px 2px 5px var(--cor-sombra);
+    margin-bottom: 5px;
 }
 
-/* Estilos para o tabuleiro do jogo */
+#level-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+/* 4. Tabuleiro do Jogo */
 .game-board {
-    display: grid; /* Usamos Grid para criar uma grade perfeita */
-    grid-template-columns: repeat(3, 90px); /* MODIFICADO */
-    gap: 10px; /* Espaço de 10px entre as cartas */
-    perspective: 1000px; /* Efeito de perspectiva 3D para a animação de virar */
+    display: grid;
+    gap: 12px;
+    perspective: 1200px; /* Perspectiva 3D mais acentuada */
+    
+    /* Layout Padrão (Mobile First) */
+    grid-template-columns: repeat(3, 85px);
+}
+.game-board[data-level="3"] {
+    grid-template-columns: repeat(4, 70px);
 }
 
-/* Estilo base para cada carta */
+/* 5. Estilos das Cartas */
 .card {
-    width: 90px;
-    height: 90px;
-    position: relative; /* Necessário para posicionar a frente e o verso */
-    transform-style: preserve-3d; /* Mantém o efeito 3D durante a animação */
-    transition: transform 0.6s; /* A animação de virar a carta durará 0.6s */
-    cursor: pointer; /* O mouse vira uma "mãozinha" ao passar por cima */
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); /* Animação de virar mais suave */
+    
+    /* Layout Padrão (Mobile First) */
+    width: 85px;
+    height: 85px;
+}
+.game-board[data-level="3"] .card {
+    width: 70px;
+    height: 70px;
 }
 
-/* Quando uma carta tiver a classe "flipped", ela vai virar */
+.card:hover {
+    transform: scale(1.05); /* Efeito de zoom sutil ao passar o mouse */
+}
+
 .card.flipped {
     transform: rotateY(180deg);
 }
 
-/* Estilos para a frente e o verso da carta */
 .card-face {
-    position: absolute; /* Coloca a frente e o verso um sobre o outro */
+    position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Esconde o lado de trás do elemento quando ele não está virado para nós */
-    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    
+    border-radius: 15px; /* Cantos bem arredondados */
+    box-shadow: 0 5px 15px var(--cor-sombra);
+    backface-visibility: hidden; /* Essencial para o efeito 3D */
+    
+    font-size: 22px;
+    font-weight: 900;
 }
 
-/* Verso da carta (o que vemos no início) */
 .card-back {
-    background-color: #9a8c98;
+    background-color: var(--cor-verso-carta);
     color: white;
-    font-size: 40px; /* Tamanho do ponto de interrogação */
+    font-size: 50px;
+    line-height: 0; /* Alinha melhor o emoji */
+    content: '⭐'; /* Uma estrela no verso é mais legal que '?' */
+}
+/* Para exibir a estrela, sobrescrevemos o '?' do JS */
+.card-back::before {
+    content: '⭐';
+}
+.card-back span {
+    display: none; /* Esconde o '?' que vem do JS */
 }
 
-/* Frente da carta (o conteúdo, emoji ou palavra) */
 .card-front {
-    background-color: #f2e9e4;
-    color: #4a4e69;
-    transform: rotateY(180deg); /* Já começa "virada" para o outro lado */
+    background-color: var(--cor-frente-carta);
+    color: var(--cor-texto-principal);
+    transform: rotateY(180deg);
 }
 
-/* Estilo para a mensagem de vitória */
-#victory-message {
-    text-align: center;
-    margin-top: 20px;
+/* 6. Animação de Recompensa para Pares Corretos */
+@keyframes matchAnimation {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.card.matched {
+    animation: matchAnimation 0.5s ease-in-out;
+}
+
+/* 7. Mensagem de Vitória e Botões */
+#victory-message h2 {
+    font-size: 2.5em;
+    color: white;
+    text-shadow: 2px 2px 5px var(--cor-sombra);
+}
+
+#victory-message button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.2em;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px; /* Botões totalmente arredondados */
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px var(--cor-sombra);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#victory-message button:hover {
+    transform: translateY(-3px); /* Efeito de "levantar" ao passar o mouse */
+    box-shadow: 0 6px 15px var(--cor-sombra);
+}
+
+#next-level-button {
+    background-color: var(--cor-botao-proximo);
 }
 
 #restart-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #4caf50;
-    color: white;
+    background-color: var(--cor-botao-reiniciar);
+    display: none; /* Começa escondido, JS controla a exibição */
 }
 
-/* Classe para esconder elementos */
-.hidden {
-    display: none;
-}
-
-/* Estilos para telas menores (responsivo) */
-/* --- Media Queries para Telas Maiores (Desktop/Tablet) --- */
-@media (min-width: 768px) { /* Aplica esses estilos a partir de 768px de largura */
+/* 8. Media Queries para Telas Maiores (Responsividade) */
+@media (min-width: 768px) {
+    h1 { font-size: 3em; }
+    #level-title { font-size: 2em; }
+    
     .game-board {
-        grid-template-columns: repeat(4, 120px); /* 4 colunas de 120px para desktop */
-        gap: 15px; /* Mais espaço entre as cartas no desktop */
+        gap: 16px;
+        /* Layout Desktop */
+        grid-template-columns: repeat(4, 120px);
     }
-
+    .game-board[data-level="3"] {
+        grid-template-columns: repeat(4, 120px);
+    }
+    
     .card {
-        width: 120px; /* Cartas maiores no desktop */
+        width: 120px;
+        height: 120px;
+    }
+    .game-board[data-level="3"] .card {
+        width: 120px;
         height: 120px;
     }
 
     .card-face {
-        font-size: 28px; /* Texto/emoji maior no desktop */
+        font-size: 28px;
     }
-
     .card-back {
-        font-size: 60px; /* '?' maior no desktop */
-    }
-    
-    h1 {
-        font-size: 2.5em; /* Título um pouco maior em telas grandes */
-    }
-
-    #restart-button {
-        padding: 12px 25px;
-        font-size: 20px;
+        font-size: 70px;
     }
 }
