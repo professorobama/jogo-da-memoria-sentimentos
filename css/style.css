@@ -17,15 +17,15 @@ h1 {
 /* Estilos para o tabuleiro do jogo */
 .game-board {
     display: grid; /* Usamos Grid para criar uma grade perfeita */
-    grid-template-columns: repeat(4, 100px); /* 4 colunas de 100px cada */
+    grid-template-columns: repeat(3, 90px); /* MODIFICADO */
     gap: 10px; /* Espaço de 10px entre as cartas */
     perspective: 1000px; /* Efeito de perspectiva 3D para a animação de virar */
 }
 
 /* Estilo base para cada carta */
 .card {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     position: relative; /* Necessário para posicionar a frente e o verso */
     transform-style: preserve-3d; /* Mantém o efeito 3D durante a animação */
     transition: transform 0.6s; /* A animação de virar a carta durará 0.6s */
@@ -47,7 +47,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
+    font-size: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
@@ -55,7 +55,7 @@ h1 {
 .card-back {
     background-color: #9a8c98;
     color: white;
-    font-size: 50px; /* Tamanho do ponto de interrogação */
+    font-size: 40px; /* Tamanho do ponto de interrogação */
 }
 
 /* Frente da carta (o conteúdo, emoji ou palavra) */
@@ -84,4 +84,35 @@ h1 {
 /* Classe para esconder elementos */
 .hidden {
     display: none;
+}
+
+/* Estilos para telas menores (responsivo) */
+/* --- Media Queries para Telas Maiores (Desktop/Tablet) --- */
+@media (min-width: 768px) { /* Aplica esses estilos a partir de 768px de largura */
+    .game-board {
+        grid-template-columns: repeat(4, 120px); /* 4 colunas de 120px para desktop */
+        gap: 15px; /* Mais espaço entre as cartas no desktop */
+    }
+
+    .card {
+        width: 120px; /* Cartas maiores no desktop */
+        height: 120px;
+    }
+
+    .card-face {
+        font-size: 28px; /* Texto/emoji maior no desktop */
+    }
+
+    .card-back {
+        font-size: 60px; /* '?' maior no desktop */
+    }
+    
+    h1 {
+        font-size: 2.5em; /* Título um pouco maior em telas grandes */
+    }
+
+    #restart-button {
+        padding: 12px 25px;
+        font-size: 20px;
+    }
 }
